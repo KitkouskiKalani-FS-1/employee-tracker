@@ -53,7 +53,8 @@ class Main{
                 this.showMenu();
                 break;
             case 3:
-                this.editEmployee();
+                let userEdit = prompt("Select an id of a worker, then enter their new pay rate [seperate each by a comma]").split(",");
+                this.editEmployee(userEdit[0]-1,userEdit[1]);
                 this.displayEmployees();
                 this.showMenu();
                 break;
@@ -86,8 +87,8 @@ class Main{
             this.employees.splice(removeEmployee-1,1);
         }
     }
-    editEmployee(editEmployee){
-
+    editEmployee(editId, editPayRate){
+        this.employees[editId].payRate = editPayRate;
     }
     displayEmployees(){
         let id = 1;
