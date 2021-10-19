@@ -36,30 +36,37 @@ class Main{
         this.addEmployee("Brandon", 45, 25, 12);
         this.addEmployee("Pamela", 42, 15, 50);
         this.displayEmployees();
-        this.showMenu();
     }
     showMenu(){
-            let userChoice = parseInt(prompt("Main Menu\n1. Add Employee\n2. Remove Employee\n3. Edit Employee\n4. Display Employees"));
-            switch (userChoice) {
-                case 1:
-                    let userEmployee = prompt("Add employee name, age, hours/wk, pay rate [separate each by a comma]").split(",");
-                    console.log(userEmployee);
-                    this.addEmployee(userEmployee[0],userEmployee[1],userEmployee[2],userEmployee[3]);
-                    this.showMenu();
-                    break;
-                case 2:
-                    this.removeEmployee();
-                    break;
-                case 3:
-                    this.editEmployee();
-                    break;
-                case 4:
-                    this.displayEmployees();
-                    this.showMenu();
-                    break;
-                default:
-                    break;
-            }
+        let userChoice = parseInt(prompt("Main Menu\n1. Add Employee\n2. Remove Employee\n3. Edit Employee\n4. Display Employees"));
+        switch (userChoice) {
+            case 1:
+                let userEmployee = prompt("Add employee name, age, hours/wk, pay rate [separate each by a comma]").split(",");
+                this.addEmployee(userEmployee[0],userEmployee[1],userEmployee[2],userEmployee[3]);
+                this.displayEmployees();
+                this.showMenu();
+                break;
+            case 2:
+                let userDelete = prompt("Choose an employee to fire! (use name or id)");
+                this.removeEmployee(userDelete);
+                this.displayEmployees();
+                this.showMenu();
+                break;
+            case 3:
+                this.editEmployee();
+                this.displayEmployees();
+                this.showMenu();
+                break;
+            case 4:
+                this.displayEmployees();
+                this.showMenu();
+                break;
+            case 5:
+                break;
+            default:
+                this.showMenu();
+                break;
+        }
     }
     addEmployee(name,age,hours,payRate){
         if(hours<40){
@@ -71,10 +78,15 @@ class Main{
             this.employees.push(fullTime);
         }
     }
-    removeEmployee(){
-
+    removeEmployee(removeEmployee){
+        if(isNaN(removeEmployee)){
+            this.employees = this.employees.filter(employee => employee["name"]!=removeEmployee);
+        }
+        else{
+            this.employees.splice(removeEmployee-1,1);
+        }
     }
-    editEmployee(){
+    editEmployee(editEmployee){
 
     }
     displayEmployees(){
@@ -85,6 +97,7 @@ class Main{
             console.log(`${id}\t${employee.name}\t${employee.annualSalary}\t${employee.hours}\t${employee.payRate}\t${employee.employeeType}`);
             id++;
         })
+        this.showMenu();
     }
 }
 (()=>{
